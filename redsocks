@@ -80,7 +80,7 @@ run() {
     append_redsocks_conf "http-connect" $ip $port "12346"
 
     iptables_rules A
-    /usr/sbin/redsocks -c /tmp/redsocks.conf &
+    /usr/bin/redsocks -c /tmp/redsocks.conf &
 
     tail -f /dev/null
 }

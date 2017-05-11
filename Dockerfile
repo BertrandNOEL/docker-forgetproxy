@@ -1,11 +1,7 @@
-FROM debian:wheezy
+FROM alpine
 
-RUN apt-get -q update
-RUN apt-get -qy install \
-    iptables \
-    procps \
-    psmisc \
-    redsocks
+RUN apk update
+RUN apk add bash iptables procps psmisc redsocks
     
 ADD redsocks.conf /tmp/
 ADD redsocks /root/
