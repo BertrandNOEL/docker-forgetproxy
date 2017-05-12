@@ -34,7 +34,7 @@ redsocks {
   local_port = $local_port;
 }
 EOF
-) >> /tmp/redsocks.conf
+) >> /etc/redsocks/redsocks.conf
 }
 
 parse_ip() {
@@ -80,9 +80,11 @@ run() {
     append_redsocks_conf "http-connect" $ip $port "12346"
 
     iptables_rules A
-    /usr/bin/redsocks -c /tmp/redsocks.conf &
+    /usr/bin/redsocks -c /etc/redsocks/redsocks.conf &
 
-    tail -f /dev/null
+    PID=$!
+    wait $PID
+
 }
 
 

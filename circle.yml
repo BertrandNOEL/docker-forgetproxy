@@ -5,7 +5,11 @@ machine:
 dependencies:
   override:
     - docker info
-    - docker build -t aplagnol/forgetproxy:alpine .
+    - docker build -t aplagnol/forgetproxy .
+
+test:
+  override:
+    - "true"
 
 deployment:
   hub:
