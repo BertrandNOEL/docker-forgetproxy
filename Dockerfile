@@ -1,7 +1,7 @@
 FROM alpine
 
 RUN apk update
-RUN apk add wget bash iptables procps psmisc make clang gcc musl-dev libevent-dev linux-headers
+RUN apk add wget bash iptables procps psmisc libevent make clang gcc musl-dev libevent-dev linux-headers
 RUN wget --no-check-certificate https://github.com/darkk/redsocks/archive/master.zip
 RUN unzip master.zip
 WORKDIR redsocks-master
