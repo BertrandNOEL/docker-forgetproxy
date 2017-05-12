@@ -25,7 +25,21 @@ append_redsocks_conf() {
     echo missing required parameter >&2
     exit 1
   fi
-  (cat <<EOF
+  if [ $type == "http-connect" ] ; then
+    (cat <<EOF
+redsocks {
+  type = $type;
+  ip = $ip;
+  port = $port;
+  local_ip = 0.0.0.0;
+  local_port = $local_port;
+  disclose_src = Forwarded_ipport;
+  on_proxy_fail = forward_http_err;
+}
+EOF
+) >> /etc/redsocks/redsocks.conf
+  else
+    (cat <<EOF
 redsocks {
   type = $type;
   ip = $ip;
@@ -35,6 +49,7 @@ redsocks {
 }
 EOF
 ) >> /etc/redsocks/redsocks.conf
+  fi
 }
 
 parse_ip() {
@@ -47,7 +62,7 @@ parse_port() {
 
 stop() {
     echo "Cleaning iptables"
-    iptables_rules D
+    while iptables_rules D; do :; done
     pkill -9 redsocks
 }
 
